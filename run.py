@@ -1,4 +1,3 @@
-import numpy as np
 from numpy import matrix
 from algorithm import *
 
@@ -21,7 +20,10 @@ with open('input.txt', 'r') as f:
 graph = matrix(np.multiply(
     matrix(np.repeat(price, factories, axis=0)).T - costs,
     matrix(np.repeat(number, factories, axis=0)).T))
-
 print(graph)
-matching = hungarian_algorithm(graph)
-print(matching)
+
+matching = extended_hungarian_algorithm(graph, log=True)
+expected = brute_force(graph)
+print('Matching:', matching)
+print('Weight:', sum(graph[i, j] for i, j in matching))
+print('Expected:', expected)
